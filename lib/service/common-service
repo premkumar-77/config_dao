@@ -1,0 +1,25 @@
+"user-strict";
+const PlatformService = require("./platform-service");
+const models = require('../registry/service-registry');
+
+class CommonService{
+    constructor(sequelize, redis) {
+        this.registerModels = models(sequelize);
+        this.sequelize = sequelize;
+        this.platformService = new PlatformService(this.registerModels.PlatformConfig, redis);
+    }
+
+    getPlatformConfig = (...args) => {
+        return this.platformService.getPlatformConfig(...args);
+    };
+
+    updatePlatformConfig = (...args) => {
+        return this.platformService.updatePlatformConfig(...args);
+    };
+    
+    getNetworkConfig = (...args) => {
+        return this.platformService.getNetworkConfig(...args);
+    }
+}
+
+module.exports = CommonService;
